@@ -115,6 +115,17 @@ bool SwitchBinary::HandleMsg
 		}
 		return true;
 	}
+	if (SwitchBinaryCmd_Set == (SwitchBinaryCmd)_data[0])
+	{
+		Log::Write( LogLevel_Info, GetNodeId(), "Received SwitchBinary set from node %d: level=%s", GetNodeId(), _data[1] ? "On" : "Off" );
+
+		if( ValueBool* value = static_cast<ValueBool*>( GetValue( _instance, 0 ) ) )
+		{
+			value->OnValueRefreshed( _data[1] != 0 );
+			value->Release();
+		}
+		return true;
+	}
 
 	return false;
 }
