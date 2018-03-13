@@ -106,6 +106,9 @@ bool ValueButton::ReleaseButton
 	// Set the value in the device.
 	m_pressed = false;
 	bool res = Value::Set();
+	#if 1
+	Log::Write( LogLevel_Warning, GetID().GetNodeId(), "PS HACK L%d: ValueButton::ReleaseButton: Removed node->RequestDynamicValues() ", __LINE__);
+	#else
 	if( Driver* driver = Manager::Get()->GetDriver( GetID().GetHomeId() ) )
 	{
 		if( Node* node = driver->GetNodeUnsafe( GetID().GetNodeId() ) )
@@ -113,6 +116,7 @@ bool ValueButton::ReleaseButton
 			node->RequestDynamicValues();
 		}
 	}
+	#endif
 	return res;
 }
 

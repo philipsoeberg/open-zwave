@@ -174,6 +174,15 @@ void SwitchBinary::SetValueBasic
 	// stays in sync with it. We must be careful mapping the uint8 BASIC value
 	// into a class specific value.
 	// When the device wakes up, the real requested value will be retrieved.
+	#if 1
+	Log::Write( LogLevel_Warning, GetNodeId(), "PS HACK L%d: SwitchBinary::SetValueBasic: No longer GET to refresh value, just use as is", __LINE__);
+	if( ValueBool* value = static_cast<ValueBool*>( GetValue( _instance, 0 ) ) )
+	{
+		Log::Write( LogLevel_Warning, GetNodeId(), "PS HACK L%d: Setting OnValueRefreshed(%d)", __LINE__, _value != 0);
+		value->OnValueRefreshed( _value != 0 );
+		value->Release();
+	}
+	#else
 	RequestValue( 0, 0, _instance, Driver::MsgQueue_Send );
 	if( Node* node = GetNodeUnsafe() )
 	{
@@ -189,6 +198,7 @@ void SwitchBinary::SetValueBasic
 			}
 		}
 	}
+	#endif
 }
 
 //-----------------------------------------------------------------------------
