@@ -1,3 +1,8 @@
+Note: This is Philip Soeberg changes:
+
+I use this branch to add CentralScene support to my ZHC5010 devices.
+I've also reduced some of the z-wave chatter when using BASIC CC. This works for my ZHC5010s.
+
 ![Open-ZWave Library](https://github.com/OpenZWave/open-zwave-web/raw/master/gfx/OZW_SF.png)
 ==================
 
