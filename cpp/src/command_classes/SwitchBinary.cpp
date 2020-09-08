@@ -187,6 +187,15 @@ namespace OpenZWave
 				// stays in sync with it. We must be careful mapping the uint8 BASIC value
 				// into a class specific value.
 				// When the device wakes up, the real requested value will be retrieved.
+				#if 1
+				Log::Write( LogLevel_Warning, GetNodeId(), "PS HACK: SwitchBinary::SetValueBasic(_instance %d, _value %d): " \
+				                                           "no longer GET to refresh value, just use as is", _instance, _value);
+				if (Internal::VC::ValueBool* value = static_cast<Internal::VC::ValueBool*>(GetValue(_instance, 0)))
+				{
+					value->OnValueRefreshed(_value != 0);
+					value->Release();
+				}
+				#else
 				RequestValue(0, 0, _instance, Driver::MsgQueue_Send);
 				if (Node* node = GetNodeUnsafe())
 				{
@@ -202,6 +211,7 @@ namespace OpenZWave
 						}
 					}
 				}
+				#endif
 			}
 
 //-----------------------------------------------------------------------------
